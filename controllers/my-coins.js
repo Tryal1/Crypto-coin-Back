@@ -25,7 +25,6 @@ const mycoinGet = async (req,res) =>{
 
 const myCoinsPost = async (req,res)=>{
     const {name,coin} = req.body
-
     const existe = await MyCoins.findOne({name})
     
     if(existe){
@@ -44,12 +43,16 @@ const myCoinsPost = async (req,res)=>{
     }
     
 }
-
 const myCoinsPut = async (req,res)=>{
     const {id,uid} = req.params
     const {_id,name, ...rest} = req.body
-
-    const coin = await MyCoins.findByIdAndUpdate(id,rest)
+    console.log(rest.amount)
+    const coin = await MyCoins.findByIdAndUpdate(id,{$set:{
+        'coin.$[cn].price':rest.price,
+        'coin.$[cn].amount':rest.amount,
+    }},{arrayFilters:[{
+        'cn._id':uid
+    }]})
     res.json(coin)
 }
 
