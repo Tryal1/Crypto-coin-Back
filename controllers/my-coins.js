@@ -57,8 +57,11 @@ const myCoinsPut = async (req,res)=>{
 }
 
 const myCoinsDelete = async (req,res)=>{
-    const {id} = req.params
-    const coin = await MyCoins.findByIdAndDelete(id)
+    const {id,uid} = req.params
+    const coin = await MyCoins.findByIdAndUpdate(id , 
+        { $pull : { "coin" : { "_id" :  uid } } } , 
+        { multi : true }  
+    )
     res.json(coin)
 }
 

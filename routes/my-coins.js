@@ -31,7 +31,7 @@ router.put('/:id/:uid',[
 ],myCoinsPut)
 
 
-router.delete('/:id',[
+router.delete('/:id/:uid',[
     validarJWT,
     check('id','no es un id valido de mongo').isMongoId(),
     check('id').custom(existeMiMoneda),
