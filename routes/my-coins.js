@@ -1,7 +1,7 @@
 const {Router} = require('express')
 const { check } = require('express-validator')
 const { mycoinsGet,mycoinGet,myCoinsPost, myCoinsPut, myCoinsDelete } = require('../controllers/my-coins')
-const { existeMiMoneda } = require('../helpers/db-validator')
+const { existeMiMoneda, existeMonedaUID } = require('../helpers/db-validator')
 const { validarCampos } = require('../middlewares/validar-campos')
 const { validarJWT } = require('../middlewares/validar-jwt')
 const router = Router()
@@ -33,6 +33,8 @@ router.put('/:id/:uid',[
 
 router.delete('/:id/:uid',[
     validarJWT,
+    // check('uid','no es un uid valido de mongo').isMongoId(),
+    check('uid').custom(existeMonedaUID),
     check('id','no es un id valido de mongo').isMongoId(),
     check('id').custom(existeMiMoneda),
     validarCampos

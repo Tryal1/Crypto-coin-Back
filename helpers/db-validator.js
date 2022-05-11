@@ -37,10 +37,27 @@ const existeMiMoneda = async (id)=>{
     }
 }
 
+const existeMonedaUID = async(id)=>{
+    const existe = await MyCoins.findById({_id:'627b21de82fcc747adf87c24'},
+    { coin: 
+        { $elemMatch : 
+           { 
+             _id: id
+           } 
+        } 
+    })
+    console.log(existe.coin)
+    if(existe.coin.length === 0){
+        throw new Error(`La moneda con el id ${id} no existe`)
+    }
+    
+}
+
 module.exports ={
     validarEmail,
     existeUsuarioId,
     validarRol,
     existeMoneda,
     existeMiMoneda,
+    existeMonedaUID
 }
