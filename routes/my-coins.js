@@ -25,6 +25,8 @@ router.post('/',[
 
 router.put('/:id/:uid',[
     validarJWT,
+    check('id','no es un id valido de mongo').isMongoId(),
+    check('uid').custom(existeMonedaUID),
     check('id','El id no es de mongo').isMongoId(),
     check('id').custom(existeMiMoneda),
     validarCampos

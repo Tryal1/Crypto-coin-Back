@@ -6,6 +6,7 @@ const { generarJWT } = require('../helpers/generar-JWT.js');
 const login = async (req, res)=>{
 
     const {email, password} = req.body
+    console.log(email, password)
 
     try {
         const usuario = await Usuario.findOne({email})
