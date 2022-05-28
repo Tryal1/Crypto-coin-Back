@@ -24,6 +24,7 @@ const usuairoGet = async (req,res)=>{
     res.json(usuario)
 }
 
+
 const usuarioPost = async (req, res)=>{
 
     const {name,email,password,rol='USER_ROLE'} = req.body

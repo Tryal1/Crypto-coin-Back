@@ -4,8 +4,7 @@ const Usuario = require('../models/usuarios')
 
 const validarJWT = async(req, res = response, next) => {
     //Obtiene el token del header
-    const token = req.header('x-token')
-
+    const token = req.header('xtoken')
 
     //Verifica si hay token
     if(!token){
@@ -30,8 +29,7 @@ const validarJWT = async(req, res = response, next) => {
                 msg: 'Token no valido - usuario con estado false'
             })
         }
-
-        req.usuario = usuario;
+        res.json(usuario);
 
         next()
     }catch(e){

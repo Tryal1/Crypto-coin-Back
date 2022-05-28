@@ -1,15 +1,16 @@
 const { Router } = require('express')
 const {check} = require('express-validator')
-const { usuarioPost, usuairosGet, usuairoGet, usuarioPut, usuarioDelete } = require('../controllers/usuarios')
+const { usuarioPost, usuairosGet, usuairoGet, usuarioPut, usuarioDelete} = require('../controllers/usuarios')
 const { validarEmail, existeUsuarioId, validarRol } = require('../helpers/db-validator')
 const { validarCampos } = require('../middlewares/validar-campos')
+const { validarJWT } = require('../middlewares/validar-jwt')
 const { tieneRole } = require('../middlewares/validar-role')
 
 const routes = Router()
 
 //Obtener 
 //todos
-routes.get('/',usuairosGet)
+routes.get('/',validarJWT)
 //1
 routes.get('/:id',[
     check('id','no es un id valido de mongo').isMongoId(),
