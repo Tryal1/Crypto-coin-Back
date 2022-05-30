@@ -51,6 +51,7 @@ const usuarioPut = async(req,res)=>{
         const salt = bcrypt.genSaltSync()
         resto.password = bcrypt.hashSync(password , salt)
     }
+
     const usuario = await Usuario.findByIdAndUpdate(id,resto);
     res.json(usuario)
 }
