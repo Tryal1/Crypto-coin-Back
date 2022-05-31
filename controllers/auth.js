@@ -4,9 +4,7 @@ const { generarJWT } = require('../helpers/generar-JWT.js');
 // const { googleVerify } = require('../helpers/google-verify');
 
 const login = async (req, res)=>{
-
     const {email, password} = req.body
-    console.log(email, password)
 
     try {
         const usuario = await Usuario.findOne({email})
@@ -30,7 +28,6 @@ const login = async (req, res)=>{
         }
 
         const token = await generarJWT(usuario.id)
-        
 
         res.json({
             usuario,
