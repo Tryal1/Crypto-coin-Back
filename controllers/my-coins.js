@@ -24,9 +24,8 @@ const mycoinGet = async (req,res) =>{
 
 
 const myCoinsPost = async (req,res)=>{
-    const {name,coin} = req.body
+    const {name,coin,usuario} = req.body
     const existe = await MyCoins.findOne({name})
-    
     if(existe){
         const update = await MyCoins.findOneAndUpdate({name},{$push:{coin:coin}})
         console.log(update)
@@ -35,7 +34,7 @@ const myCoinsPost = async (req,res)=>{
         const data = {
             name,
             coin,
-            usuario: req.usuario._id
+            usuario,
         }
         const mycoins = await MyCoins(data)
         await mycoins.save()
