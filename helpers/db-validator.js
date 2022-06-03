@@ -46,7 +46,6 @@ const existeMonedaUID = async(id)=>{
            } 
         } 
     })
-    console.log(existe.coin)
     if(existe.coin.length === 0){
         throw new Error(`La moneda con el id ${id} no existe`)
     }

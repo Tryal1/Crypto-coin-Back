@@ -12,7 +12,7 @@ const usuairosGet = async (req,res)=>{
         .skip(offset)
     ])
 
-    res.json({
+    res.status(400).json({
         total,
         usuarios,
     })
@@ -21,7 +21,7 @@ const usuairosGet = async (req,res)=>{
 const usuairoGet = async (req,res)=>{
     const {id} = req.params
     const usuario = await Usuario.findById(id)
-    res.json(usuario)
+    res.status(400).json(usuario)
 }
 
 
