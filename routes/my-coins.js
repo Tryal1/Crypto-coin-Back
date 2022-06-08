@@ -23,22 +23,20 @@ router.post('/',[
     validarCampos,
 ],myCoinsPost)
 
-router.put('/:id/:uid',[
+router.put('/:id',[
     validarJWT,
-    check('id','no es un id valido de mongo').isMongoId(),
-    check('uid').custom(existeMonedaUID),
     check('id','El id no es de mongo').isMongoId(),
-    check('id').custom(existeMiMoneda),
+    // check('id').custom(existeMiMoneda),
     validarCampos
 ],myCoinsPut)
 
 
 router.delete('/:id/:uid',[
     validarJWT,
-    // check('uid','no es un uid valido de mongo').isMongoId(),
-    check('uid').custom(existeMonedaUID),
+    check('uid','no es un uid valido de mongo').isMongoId(),
+    // check('uid').custom(existeMonedaUID),
     check('id','no es un id valido de mongo').isMongoId(),
-    check('id').custom(existeMiMoneda),
+    // check('id').custom(existeMiMoneda),
     validarCampos
 ],myCoinsDelete)
 

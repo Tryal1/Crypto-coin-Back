@@ -9,7 +9,7 @@ const DB = async ()=>{
         console.log('Conecto')
 
     }catch(error){
-        console.log('error')
+        console.log('error',error)
     }
 }
 

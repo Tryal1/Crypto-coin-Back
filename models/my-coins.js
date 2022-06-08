@@ -5,7 +5,7 @@ const MyCoins = Schema({
         type:String,
         required:[true,'El nombre es obligatorio'],
     },
-    coin:[
+    coin:
         {
             amount:{
                 type:Number,
@@ -16,7 +16,7 @@ const MyCoins = Schema({
                 required:[true,'El precio es obligatorio']
             }
         }
-    ],
+    ,
     usuario:{
         type: Schema.Types.ObjectId,
         ref: 'Usuarios',

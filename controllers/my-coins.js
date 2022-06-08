@@ -1,3 +1,4 @@
+const { findById } = require("../models/my-coins");
 const MyCoins = require("../models/my-coins");
 
 const mycoinsGet = async (req, res) => {
@@ -19,63 +20,51 @@ const mycoinGet = async (req, res) => {
 
 const myCoinsPost = async (req, res) => {
   const { name, coin, usuario } = req.body;
+
   const existe = await MyCoins.findOne({ name });
-  try{
+  try {
     if (existe) {
       const update = await MyCoins.findOneAndUpdate(
         { name },
         {
-          $push: {
-            coin: [
-              {
-                amount: Number(coin[0].amount),
-                price: Number(coin[0].price),
-              },
-            ],
+          coin: {
+            amount: Number(coin.amount) + existe.coin.amount,
+            price: Number(coin.price) + existe.coin.price,
           },
         }
       );
-     
     } else {
       const data = {
         name,
-        coin: [
-          {
-            amount: Number(coin[0].amount),
-            price: Number(coin[0].price),
-          },
-        ],
+        coin: {
+          amount: Number(coin.amount),
+          price: Number(coin.price),
+        },
         usuario,
       };
       const mycoins = await MyCoins(data);
       await mycoins.save();
-     
     }
-  }catch(error){
-    console.log(error)
+  } catch (error) {
+    console.log(error);
   }
-
 };
 const myCoinsPut = async (req, res) => {
-  const { id, uid } = req.params;
-  const { _id, name, ...rest } = req.body;
-  const coin = await MyCoins.findByIdAndUpdate(
-    id,
-    {
-      $set: {
-        "coin.$[cn].price": rest.price,
-        "coin.$[cn].amount": rest.amount,
+  const { id } = req.params;
+  const { name, ...rest } = req.body;
+  const existe = await MyCoins.findById(id);
+  if((existe.coin.amount - rest.coin.amount)>0){
+    const userCoin = await MyCoins.findByIdAndUpdate(id, {
+      coin: {
+        amount: existe.coin.amount - rest.coin.amount,
+        price: existe.coin.price - (rest.coin.price * rest.coin.amount)
       },
-    },
-    {
-      arrayFilters: [
-        {
-          "cn._id": uid,
-        },
-      ],
-    }
-  );
-  res.json(coin);
+    });
+  }
+  if((existe.coin.amount - rest.coin.amount)==0){
+    const userCoin = await MyCoins.findByIdAndDelete(id)
+  }
+ 
 };
 
 const myCoinsDelete = async (req, res) => {
@@ -95,3 +84,17 @@ module.exports = {
   myCoinsPut,
   myCoinsDelete,
 };
+
+// {
+//   $set: {
+//     "coin.$[cn].price": rest.price,
+//     "coin.$[cn].amount": rest.amount,
+//   },
+// },
+// {
+//   arrayFilters: [
+//     {
+//       "cn._id": rest.usuario,
+//     },
+//   ],
+// }

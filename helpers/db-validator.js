@@ -38,6 +38,7 @@ const existeMiMoneda = async (id)=>{
 }
 
 const existeMonedaUID = async(id)=>{
+    console.log(id)
     const existe = await MyCoins.findById({_id:'627b21de82fcc747adf87c24'},
     { coin: 
         { $elemMatch : 
